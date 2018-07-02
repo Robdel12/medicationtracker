@@ -22,7 +22,7 @@ class HomeScreen extends Component {
 
           {model.state.medications.map((medication, index) => {
           return (
-            <View key={index}>
+            <View key={index} style={styles.cardContainer}>
               <Text>Name: {medication.name}</Text>
               <Text>Time Taken: {medication.displayTakenTime}</Text>
               <Text>Time Up: {medication.timeUpDisplay} {medication.hasExpired && '(expired)'}</Text>
@@ -41,6 +41,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
+  cardContainer: {
+    borderWidth: 1,
+    borderColor: "#ddd",
+    padding: 10,
+    margin: 10
+  }
 });
 
 export default HomeScreen;

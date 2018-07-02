@@ -17,7 +17,6 @@ class NewDosageScreen extends Component {
   };
 
   submitForm = (model) => {
-
     let AppModel = this.props.screenProps.model;
     let date = new Date();
     let timeTaken = model.state.timeTaken.split(':');
@@ -36,7 +35,6 @@ class NewDosageScreen extends Component {
     return (
       <State type={Medication} value={{}}>
         {model => {
-          console.log(model.state.isValid);
           return (
             <View style={styles.container}>
               <Text>Name:</Text>

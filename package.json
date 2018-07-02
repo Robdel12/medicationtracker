@@ -11,13 +11,14 @@
     "microstates": "^0.8.1",
     "react": "16.3.1",
     "react-native": "0.55.4",
+    "moment": "^2.22.2",
+    "react-native-fix-xcode-10": "rhdeck/react-native-fix-xcode-10",
     "react-navigation": "^2.5.5"
   },
   "devDependencies": {
     "babel-jest": "23.2.0",
     "babel-preset-react-native": "4.0.0",
     "jest": "23.2.0",
-    "moment": "^2.22.2",
     "react-test-renderer": "16.3.1"
   },
   "jest": {
