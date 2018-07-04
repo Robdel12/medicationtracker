@@ -1,17 +1,12 @@
-import React, { Component } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  AsyncStorage
-} from 'react-native';
+import React, { Component } from "react";
+import { StyleSheet, View, Text, AsyncStorage } from "react-native";
 
-import State from '@microstates/react';
-import AppModel from './models/app.js';
-import { RootNavigator } from './router';
+import State from "@microstates/react";
+import AppModel from "./models/app.js";
+import { RootNavigator } from "./router";
 
 let INITAL_STATE = {
-  medications: []
+  dosages: []
 };
 
 export default class App extends Component {
@@ -20,40 +15,41 @@ export default class App extends Component {
     initalMedState: []
   };
 
-  handleModelChange = (model) => {
-    AsyncStorage.setItem('medications', JSON.stringify(model.medications));
-  }
+  handleModelChange = model => {
+    AsyncStorage.setItem("dosages", JSON.stringify(model.dosages));
+  };
 
   componentWillMount() {
-    AsyncStorage.getItem('medications').then(meds => {
-      if (meds) {
+    AsyncStorage.getItem("dosages").then(dosage => {
+      if (dosage) {
         this.setState({
           hasLoaded: true,
-          initalMedState: JSON.parse(meds)
+          initalMedState: JSON.parse(dosage)
         });
       } else {
         this.setState({ hasLoaded: true });
       }
-    })
+    });
   }
 
   render() {
-    let {
-      initalMedState,
-      hasLoaded
-    } = this.state;
+    let { initalMedState, hasLoaded } = this.state;
     let initalModelState = !!initalMedState.length
-        ? { medications: initalMedState }
-        : INITAL_STATE;
+      ? { dosages: initalMedState }
+      : INITAL_STATE;
 
-    if (!hasLoaded) { return <Text>Loading...</Text>}
+    if (!hasLoaded) {
+      return <Text>Loading...</Text>;
+    }
 
     return (
-      <State type={AppModel} value={initalModelState} onChange={this.handleModelChange}>
+      <State
+        type={AppModel}
+        value={initalModelState}
+        onChange={this.handleModelChange}
+      >
         {model => {
-          return (
-            <RootNavigator screenProps={{model}} />
-          );
+          return <RootNavigator screenProps={{ model }} />;
         }}
       </State>
     );
@@ -63,8 +59,8 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#F5FCFF"
+  }
 });

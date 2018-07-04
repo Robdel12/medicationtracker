@@ -1,5 +1,13 @@
-import Medication from './medication.js';
+import Medication from "./medication.js";
 
 export default class AppModel {
-  medications = [Medication]
+  dosages = [Medication];
+
+  get activeDosages() {
+    return this.dosages.filter(dosage => !dosage.hasExpired);
+  }
+
+  get expiredDosages() {
+    return this.dosages.filter(dosage => dosage.hasExpired);
+  }
 }

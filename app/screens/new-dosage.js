@@ -17,7 +17,7 @@ class NewDosageScreen extends Component {
     let timeTaken = model.state.timeTaken.split(":");
     date.setHours(timeTaken[0], timeTaken[1]);
 
-    AppModel.medications.push({
+    AppModel.dosages.push({
       name: model.state.name,
       dosage: model.state.dosage,
       timeTaken: date.toISOString(),

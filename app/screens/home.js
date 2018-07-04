@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Button, View, Text, StyleSheet } from "react-native";
-import { List, ListItem } from "react-native-elements";
+import { Button, View, StyleSheet } from "react-native";
+import { List, ListItem, Text } from "react-native-elements";
 
 class HomeScreen extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -12,27 +12,39 @@ class HomeScreen extends Component {
     };
   };
 
+  renderDosage(dosage) {
+    let hasDosage = dosage.length;
+
+    if (!hasDosage) {
+      return null;
+    } else {
+      return dosage.map((dosage, index) => {
+        return (
+          <ListItem
+            key={index}
+            title={dosage.name}
+            hideChevron
+            subtitle={`${dosage.dosage} ${"\u2022"} ${dosage.displayTakenTime}`}
+          />
+        );
+      });
+    }
+  }
+
   render() {
     let { model } = this.props.screenProps;
 
+    if (!model.state.dosages.length) {
+      return <Text>Add a dosage</Text>;
+    }
+
     return (
       <View>
-        <List>
-          {model.state.medications.map((medication, index) => {
-            let expiredText = medication.hasExpired ? "(expired)" : null;
+        <Text style={styles.listHeading}>Active</Text>
+        <List>{this.renderDosage(model.state.activeDosages)}</List>
 
-            return (
-              <ListItem
-                key={index}
-                title={medication.name}
-                hideChevron
-                subtitle={`${medication.dosage} * ${
-                  medication.displayTakenTime
-                }`}
-              />
-            );
-          })}
-        </List>
+        <Text style={styles.listHeading}>Expired</Text>
+        <List>{this.renderDosage(model.state.expiredDosages)}</List>
       </View>
     );
   }
@@ -45,11 +57,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#F5FCFF"
   },
-  cardContainer: {
-    borderWidth: 1,
-    borderColor: "#ddd",
-    padding: 10,
-    margin: 10
+  listHeading: {
+    fontSize: 14,
+    marginTop: 25,
+    marginLeft: 8,
+    marginBottom: -15,
+    color: "black"
   }
 });
 
