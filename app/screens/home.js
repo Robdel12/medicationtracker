@@ -5,7 +5,7 @@ import { List, ListItem, Text } from "react-native-elements";
 class HomeScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: "Medication Tracker",
+      title: "Med Tracker",
       headerRight: (
         <Button title="Add" onPress={() => navigation.navigate("NewDosage")} />
       )
@@ -24,6 +24,9 @@ class HomeScreen extends Component {
             key={index}
             title={dosage.name}
             hideChevron
+            onPress={() =>
+              this.props.navigation.navigate("DosageShow", { dosage })
+            }
             subtitle={`${dosage.dosage} ${"\u2022"} ${dosage.displayTakenTime}`}
           />
         );

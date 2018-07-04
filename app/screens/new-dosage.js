@@ -60,6 +60,7 @@ class NewDosageScreen extends Component {
 
                 <Button
                   raised={false}
+                  backgroundColor="#0376da"
                   title="Submit"
                   style={styles.submitBtn}
                   disabled={!model.state.isValid}
