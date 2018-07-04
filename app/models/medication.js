@@ -1,7 +1,8 @@
-import moment from 'moment';
+import moment from "moment";
 
 export default class Medication {
   name = String;
+  dosage = String;
   timeTaken = String;
   dosageDuration = String;
 
@@ -11,7 +12,7 @@ export default class Medication {
   }
 
   get timeUp() {
-    return moment(this.timeTaken).add(this.dosageDuration, 'hours');
+    return moment(this.timeTaken).add(this.dosageDuration, "hours");
   }
 
   get timeUpDisplay() {
@@ -23,15 +24,11 @@ export default class Medication {
   }
 
   get hasExpired() {
-    return this.timeLeft.includes('ago');
+    return this.timeLeft.includes("ago");
   }
 
   get isValid() {
-    let {
-      name,
-      timeTaken,
-      dosageDuration
-    } = this;
+    let { name, timeTaken, dosageDuration } = this;
 
     if (name.length && timeTaken.length && dosageDuration.length) {
       return true;

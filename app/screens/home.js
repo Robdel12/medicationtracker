@@ -1,34 +1,38 @@
-import React, { Component } from 'react';
-import {
-  Button,
-  View,
-  Text,
-  StyleSheet
-} from 'react-native';
+import React, { Component } from "react";
+import { Button, View, Text, StyleSheet } from "react-native";
+import { List, ListItem } from "react-native-elements";
 
 class HomeScreen extends Component {
-  static navigationOptions = {
-    title: 'Medication Tracker',
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: "Medication Tracker",
+      headerRight: (
+        <Button title="Add" onPress={() => navigation.navigate("NewDosage")} />
+      )
+    };
   };
 
   render() {
     let { model } = this.props.screenProps;
 
     return (
-      <View style={styles.container}>
-        <Button
-          title="Add dosage"
-          onPress={() => this.props.navigation.navigate('NewDosage')} />
-
+      <View>
+        <List>
           {model.state.medications.map((medication, index) => {
-          return (
-            <View key={index} style={styles.cardContainer}>
-              <Text>Name: {medication.name}</Text>
-              <Text>Time Taken: {medication.displayTakenTime}</Text>
-              <Text>Time Up: {medication.timeUpDisplay} {medication.hasExpired && '(expired)'}</Text>
-            </View>
-          );
-        })}
+            let expiredText = medication.hasExpired ? "(expired)" : null;
+
+            return (
+              <ListItem
+                key={index}
+                title={medication.name}
+                hideChevron
+                subtitle={`${medication.dosage} * ${
+                  medication.displayTakenTime
+                }`}
+              />
+            );
+          })}
+        </List>
       </View>
     );
   }
@@ -37,9 +41,9 @@ class HomeScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#F5FCFF"
   },
   cardContainer: {
     borderWidth: 1,

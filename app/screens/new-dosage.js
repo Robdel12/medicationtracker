@@ -1,68 +1,71 @@
-import React, { Component } from 'react';
-import moment from 'moment';
-import {
-  Button,
-  View,
-  Text,
-  StyleSheet,
-  TextInput
-} from 'react-native';
+import React, { Component } from "react";
+import moment from "moment";
+import { View, Text, StyleSheet, TextInput } from "react-native";
+import { FormLabel, FormInput, Button } from "react-native-elements";
 
-import State from '@microstates/react';
-import Medication from '../models/medication';
+import State from "@microstates/react";
+import Medication from "../models/medication";
 
 class NewDosageScreen extends Component {
   static navigationOptions = {
-    title: 'Add Dosage',
+    title: "Add Dosage"
   };
 
-  submitForm = (model) => {
+  submitForm = model => {
     let AppModel = this.props.screenProps.model;
     let date = new Date();
-    let timeTaken = model.state.timeTaken.split(':');
+    let timeTaken = model.state.timeTaken.split(":");
     date.setHours(timeTaken[0], timeTaken[1]);
 
     AppModel.medications.push({
       name: model.state.name,
+      dosage: model.state.dosage,
       timeTaken: date.toISOString(),
       dosageDuration: model.state.dosageDuration
     });
 
-    this.props.navigation.navigate('Home');
-  }
+    this.props.navigation.navigate("Home");
+  };
 
   render() {
     return (
       <State type={Medication} value={{}}>
         {model => {
           return (
-            <View style={styles.container}>
-              <Text>Name:</Text>
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(text) => model.name.set(text)}
-                placeholder="Advil"
-                value={model.state.name} />
+            <View style={styles.background}>
+              <View style={styles.formContainer}>
+                <FormLabel>Name</FormLabel>
+                <FormInput
+                  onChangeText={text => model.name.set(text)}
+                  placeholder="Advil"
+                />
 
-                <Text>Time Taken:</Text>
-                <TextInput
-                  style={styles.inputStyle}
-                  onChangeText={(text) => model.timeTaken.set(text)}
-                  placeholder={`${moment().format('H:mm')}`}
-                  value={model.state.timeTaken} />
+                <FormLabel>Dosage:</FormLabel>
+                <FormInput
+                  onChangeText={text => model.dosage.set(text)}
+                  placeholder="200mg"
+                />
 
-                  <Text>Duration (in hours):</Text>
-                  <TextInput
-                    style={styles.inputStyle}
-                    onChangeText={(text) => model.dosageDuration.set(text)}
-                    placeholder="6"
-                    value={model.state.dosageDuration} />
+                <FormLabel>Time Taken:</FormLabel>
+                <FormInput
+                  onChangeText={text => model.timeTaken.set(text)}
+                  placeholder={`${moment().format("H:mm")}`}
+                />
 
-                    <Button
-                      title="Submit"
-                      style={styles.submitBtn}
-                      disabled={!model.state.isValid}
-                      onPress={()=> this.submitForm(model)} />
+                <FormLabel>Duration (in hours):</FormLabel>
+                <FormInput
+                  onChangeText={text => model.dosageDuration.set(text)}
+                  placeholder="6"
+                />
+
+                <Button
+                  raised={false}
+                  title="Submit"
+                  style={styles.submitBtn}
+                  disabled={!model.state.isValid}
+                  onPress={() => this.submitForm(model)}
+                />
+              </View>
             </View>
           );
         }}
@@ -72,22 +75,20 @@ class NewDosageScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: "#E9E9Ef"
+  },
+  formContainer: {
+    backgroundColor: "white",
+    paddingTop: 20,
+    paddingBottom: 50
   },
   inputStyle: {
-    height: 40,
-    width: 350,
-    borderColor: 'gray',
-    borderWidth: 1,
-    padding: 10
+    color: "black"
   },
   submitBtn: {
-    borderWidth: 1,
-    borderColor: 'gray'
+    marginTop: 25
   }
 });
 
