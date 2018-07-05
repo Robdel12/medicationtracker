@@ -23,14 +23,17 @@ class DosageShow extends Component {
     let { dosage } = this.props.navigation.state.params;
 
     return (
-      <View>
-        <Text>{dosage.dosage}</Text>
-        <Text>Exprires {dosage.timeLeft}</Text>
-        <Text>Time Taken: {dosage.displayTakenTime}</Text>
-        <Text>Time Up: {dosage.timeUpDisplay}</Text>
+      <View style={styles.showContainer}>
+        <Text style={styles.showText}>{dosage.dosage}</Text>
+        <Text style={styles.showText}>Exprires {dosage.timeLeft}</Text>
+        <Text style={styles.showText}>
+          Time Taken: {dosage.displayTakenTime}
+        </Text>
+        <Text style={styles.showText}>Time Up: {dosage.timeUpDisplay}</Text>
 
         <Button
           title="Remove"
+          style={styles.removeBtn}
           onPress={() => this.removeDosage(dosage, model)}
         />
       </View>
@@ -39,18 +42,15 @@ class DosageShow extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F5FCFF"
+  showContainer: {
+    padding: 20
   },
-  listHeading: {
-    fontSize: 14,
-    marginTop: 25,
-    marginLeft: 8,
-    marginBottom: -15,
-    color: "black"
+  showText: {
+    fontSize: 18,
+    marginBottom: 8
+  },
+  removeBtn: {
+    marginTop: 20
   }
 });
 

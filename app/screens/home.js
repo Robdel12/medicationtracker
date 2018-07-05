@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Button, View, StyleSheet } from "react-native";
 import { List, ListItem, Text } from "react-native-elements";
 
@@ -23,7 +23,6 @@ class HomeScreen extends Component {
           <ListItem
             key={index}
             title={dosage.name}
-            hideChevron
             onPress={() =>
               this.props.navigation.navigate("DosageShow", { dosage })
             }
@@ -43,11 +42,19 @@ class HomeScreen extends Component {
 
     return (
       <View>
-        <Text style={styles.listHeading}>Active</Text>
-        <List>{this.renderDosage(model.state.activeDosages)}</List>
+        {model.state.activeDosages.length && (
+          <Fragment>
+            <Text style={styles.listHeading}>ACTIVE</Text>
+            <List>{this.renderDosage(model.state.activeDosages)}</List>
+          </Fragment>
+        )}
 
-        <Text style={styles.listHeading}>Expired</Text>
-        <List>{this.renderDosage(model.state.expiredDosages)}</List>
+        {model.state.expiredDosages.length && (
+          <Fragment>
+            <Text style={styles.listHeading}>EXPIRED</Text>
+            <List>{this.renderDosage(model.state.expiredDosages)}</List>
+          </Fragment>
+        )}
       </View>
     );
   }
@@ -65,7 +72,7 @@ const styles = StyleSheet.create({
     marginTop: 25,
     marginLeft: 8,
     marginBottom: -15,
-    color: "black"
+    color: "#80878e"
   }
 });
 
