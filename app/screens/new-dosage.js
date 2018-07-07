@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import moment from "moment";
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import { FormLabel, FormInput, Button } from "react-native-elements";
+import PushNotification from "react-native-push-notification";
 import State from "@microstates/react";
+import moment from "moment";
 
 import Medication from "../models/medication";
 import { headerStyle } from "../style";
@@ -24,6 +25,18 @@ class NewDosageScreen extends Component {
       dosage: model.state.dosage,
       timeTaken: date.toISOString(),
       dosageDuration: model.state.dosageDuration
+    });
+
+    let notificationDate = new Date();
+
+    notificationDate.setHours(
+      notificationDate.getHours() + model.state.dosageDuration
+    );
+
+    PushNotification.localNotificationSchedule({
+      title: `${model.state.name} is almost up`, // (optional)
+      message: `Your dosage for ${model.state.name} is almost up.`, // (required)
+      date: notificationDate
     });
 
     this.props.navigation.navigate("Home");

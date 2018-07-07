@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { Text, AsyncStorage, DeviceEventEmitter } from "react-native";
+import {
+  Text,
+  AsyncStorage,
+  DeviceEventEmitter,
+  PushNotificationIOS
+} from "react-native";
+import PushNotification from "react-native-push-notification";
 
 import State from "@microstates/react";
 import AppModel from "./models/app.js";
@@ -28,6 +34,18 @@ export default class App extends Component {
         });
       } else {
         this.setState({ hasLoaded: true });
+      }
+    });
+  }
+
+  componentDidMount() {
+    PushNotification.configure({
+      // (required) Called when a remote or local notification is opened or received
+      onNotification: function(notification) {
+        console.log("NOTIFICATION:", notification);
+
+        // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
+        notification.finish(PushNotificationIOS.FetchResult.NoData);
       }
     });
   }
