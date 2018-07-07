@@ -1,5 +1,11 @@
 import React, { Component, Fragment } from "react";
-import { Button, View, StyleSheet, DeviceEventEmitter } from "react-native";
+import {
+  Button,
+  ScrollView,
+  View,
+  StyleSheet,
+  DeviceEventEmitter
+} from "react-native";
 import { List, ListItem, Text } from "react-native-elements";
 
 import { headerStyle } from "../style";
@@ -9,6 +15,7 @@ class HomeScreen extends Component {
     return {
       title: "Med Tracker",
       ...headerStyle,
+      headerBackTitle: "Home",
       headerRight: (
         <Button
           title="Add"
@@ -70,7 +77,7 @@ class HomeScreen extends Component {
     }
 
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         {model.state.activeDosages.length && (
           <Fragment>
             <Text style={styles.listHeading}>ACTIVE</Text>
@@ -84,7 +91,7 @@ class HomeScreen extends Component {
             <List>{this.renderDosage(model.state.expiredDosages)}</List>
           </Fragment>
         )}
-      </View>
+      </ScrollView>
     );
   }
 }

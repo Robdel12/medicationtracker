@@ -29,6 +29,7 @@ class DosageShow extends Component {
       <View style={styles.showContainer}>
         <View style={styles.showContent}>
           <Text style={styles.showText}>{dosage.dosage}</Text>
+          <Text style={styles.showText}>Duration: {dosage.dosageDuration}</Text>
           <Text style={styles.showText}>
             {dosage.hasExpired
               ? `Expired ${dosage.timeLeft}`

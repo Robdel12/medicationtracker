@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TextInput, DatePickerIOS } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+  DatePickerIOS,
+  KeyboardAvoidingView
+} from "react-native";
 import { FormLabel, FormInput, Button } from "react-native-elements";
 import PushNotification from "react-native-push-notification";
 import State from "@microstates/react";
@@ -12,6 +20,10 @@ class NewDosageScreen extends Component {
   static navigationOptions = {
     title: "Add Dosage",
     ...headerStyle
+  };
+
+  state = {
+    showPicker: false
   };
 
   submitForm = formModel => {
@@ -35,13 +47,18 @@ class NewDosageScreen extends Component {
     this.props.navigation.navigate("Home");
   };
 
+  // TODO Refactor to use a form model microstate rather than the medication model directly
   render() {
     return (
       <State type={Medication} value={{ timeTaken: new Date() }}>
         {formModel => {
           return (
-            <View style={styles.background}>
-              <View style={styles.formContainer}>
+            <ScrollView style={styles.background}>
+              <KeyboardAvoidingView
+                style={styles.formContainer}
+                enabled
+                behavior="padding"
+              >
                 <FormLabel>Name</FormLabel>
                 <FormInput
                   onChangeText={text => formModel.name.set(text)}
@@ -56,18 +73,41 @@ class NewDosageScreen extends Component {
                   placeholder="200mg"
                 />
 
-                <FormLabel>Time Taken:</FormLabel>
-                <DatePickerIOS
-                  date={formModel.state.timeTaken || new Date()}
-                  onDateChange={date => formModel.timeTaken.set(date)}
-                />
-
                 <FormLabel>Duration (in hours):</FormLabel>
                 <FormInput
                   onChangeText={text => formModel.dosageDuration.set(text)}
                   inputStyle={styles.inputStyle}
                   placeholder="6"
                 />
+
+                <FormLabel>Time Taken:</FormLabel>
+                <Button
+                  backgroundColor="transparent"
+                  title={formModel.state.displayTakenTime}
+                  textStyle={{ color: "black" }}
+                  buttonStyle={styles.takenTimeBtn}
+                  rightIcon={{
+                    color: "black",
+                    name: this.state.showPicker
+                      ? "arrow-drop-up"
+                      : "arrow-drop-down",
+                    size: 25
+                  }}
+                  onPress={() =>
+                    this.setState(prevState => ({
+                      showPicker: !prevState.showPicker
+                    }))
+                  }
+                />
+
+                {this.state.showPicker && (
+                  <DatePickerIOS
+                    date={formModel.state.timeTaken}
+                    maximumDate={new Date()}
+                    mode="time"
+                    onDateChange={date => formModel.timeTaken.set(date)}
+                  />
+                )}
 
                 <Button
                   raised={false}
@@ -77,8 +117,8 @@ class NewDosageScreen extends Component {
                   disabled={!formModel.state.isValid}
                   onPress={() => this.submitForm(formModel)}
                 />
-              </View>
-            </View>
+              </KeyboardAvoidingView>
+            </ScrollView>
           );
         }}
       </State>
@@ -94,10 +134,19 @@ const styles = StyleSheet.create({
   formContainer: {
     backgroundColor: "#f7f7f7",
     paddingTop: 20,
-    paddingBottom: 50
+    paddingBottom: 50,
+    minHeight: 500
   },
   inputStyle: {
     color: "black"
+  },
+  takenTimeBtn: {
+    borderWidth: 0.5,
+    borderColor: "#312F2F",
+    marginTop: 12,
+    marginRight: 5,
+    marginLeft: 5,
+    marginBottom: 4
   },
   submitBtn: {
     marginTop: 25
