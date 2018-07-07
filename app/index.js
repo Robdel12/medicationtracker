@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {
   Text,
+  AppState,
   AsyncStorage,
   DeviceEventEmitter,
   PushNotificationIOS
@@ -17,8 +18,19 @@ let INITAL_STATE = {
 
 export default class App extends Component {
   state = {
+    appState: {},
     hasLoaded: false,
     initalMedState: []
+  };
+
+  _handleAppStateChange = nextAppState => {
+    this.setState({ appState: nextAppState });
+    if (
+      this.state.appState.match(/inactive|background/) &&
+      nextAppState === "active"
+    ) {
+      console.log("App has come to the foreground!");
+    }
   };
 
   handleModelChange = model => {
@@ -39,6 +51,8 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    AppState.addEventListener("change", this._handleAppStateChange);
+
     PushNotification.configure({
       // (required) Called when a remote or local notification is opened or received
       onNotification: function(notification) {
@@ -48,6 +62,10 @@ export default class App extends Component {
         notification.finish(PushNotificationIOS.FetchResult.NoData);
       }
     });
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener("change", this._handleAppStateChange);
   }
 
   render() {

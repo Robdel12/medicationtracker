@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import { View, Text, StyleSheet, TextInput, DatePickerIOS } from "react-native";
 import { FormLabel, FormInput, Button } from "react-native-elements";
 import PushNotification from "react-native-push-notification";
 import State from "@microstates/react";
@@ -14,29 +14,22 @@ class NewDosageScreen extends Component {
     ...headerStyle
   };
 
-  submitForm = model => {
+  submitForm = formModel => {
     let AppModel = this.props.screenProps.model;
-    let date = new Date();
-    let timeTaken = model.state.timeTaken.split(":");
-    date.setHours(timeTaken[0], timeTaken[1]);
+    let currentDate = new Date();
+    let newDosage = {
+      name: formModel.state.name,
+      dosage: formModel.state.dosage,
+      timeTaken: formModel.state.timeTaken,
+      dosageDuration: formModel.state.dosageDuration
+    };
 
-    AppModel.dosages.push({
-      name: model.state.name,
-      dosage: model.state.dosage,
-      timeTaken: date.toISOString(),
-      dosageDuration: model.state.dosageDuration
-    });
-
-    let notificationDate = new Date();
-
-    notificationDate.setHours(
-      notificationDate.getHours() + model.state.dosageDuration
-    );
+    AppModel.dosages.push(newDosage);
 
     PushNotification.localNotificationSchedule({
-      title: `${model.state.name} is almost up`, // (optional)
-      message: `Your dosage for ${model.state.name} is almost up.`, // (required)
-      date: notificationDate
+      title: `${formModel.state.name} is almost up`, // (optional)
+      message: `Your dosage for ${formModel.state.name} is almost up.`, // (required)
+      date: formModel.state.notificationDate
     });
 
     this.props.navigation.navigate("Home");
@@ -44,35 +37,34 @@ class NewDosageScreen extends Component {
 
   render() {
     return (
-      <State type={Medication} value={{}}>
-        {model => {
+      <State type={Medication} value={{ timeTaken: new Date() }}>
+        {formModel => {
           return (
             <View style={styles.background}>
               <View style={styles.formContainer}>
                 <FormLabel>Name</FormLabel>
                 <FormInput
-                  onChangeText={text => model.name.set(text)}
+                  onChangeText={text => formModel.name.set(text)}
                   inputStyle={styles.inputStyle}
                   placeholder="Advil"
                 />
 
                 <FormLabel>Dosage:</FormLabel>
                 <FormInput
-                  onChangeText={text => model.dosage.set(text)}
+                  onChangeText={text => formModel.dosage.set(text)}
                   inputStyle={styles.inputStyle}
                   placeholder="200mg"
                 />
 
                 <FormLabel>Time Taken:</FormLabel>
-                <FormInput
-                  onChangeText={text => model.timeTaken.set(text)}
-                  inputStyle={styles.inputStyle}
-                  placeholder={`${moment().format("H:mm")}`}
+                <DatePickerIOS
+                  date={formModel.state.timeTaken || new Date()}
+                  onDateChange={date => formModel.timeTaken.set(date)}
                 />
 
                 <FormLabel>Duration (in hours):</FormLabel>
                 <FormInput
-                  onChangeText={text => model.dosageDuration.set(text)}
+                  onChangeText={text => formModel.dosageDuration.set(text)}
                   inputStyle={styles.inputStyle}
                   placeholder="6"
                 />
@@ -82,8 +74,8 @@ class NewDosageScreen extends Component {
                   backgroundColor="#84DCCF"
                   title="Submit"
                   style={styles.submitBtn}
-                  disabled={!model.state.isValid}
-                  onPress={() => this.submitForm(model)}
+                  disabled={!formModel.state.isValid}
+                  onPress={() => this.submitForm(formModel)}
                 />
               </View>
             </View>
