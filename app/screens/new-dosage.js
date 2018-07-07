@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import moment from "moment";
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import { FormLabel, FormInput, Button } from "react-native-elements";
-
 import State from "@microstates/react";
+
 import Medication from "../models/medication";
+import { headerStyle } from "../style";
 
 class NewDosageScreen extends Component {
   static navigationOptions = {
-    title: "Add Dosage"
+    title: "Add Dosage",
+    ...headerStyle
   };
 
   submitForm = model => {
@@ -37,30 +39,34 @@ class NewDosageScreen extends Component {
                 <FormLabel>Name</FormLabel>
                 <FormInput
                   onChangeText={text => model.name.set(text)}
+                  inputStyle={styles.inputStyle}
                   placeholder="Advil"
                 />
 
                 <FormLabel>Dosage:</FormLabel>
                 <FormInput
                   onChangeText={text => model.dosage.set(text)}
+                  inputStyle={styles.inputStyle}
                   placeholder="200mg"
                 />
 
                 <FormLabel>Time Taken:</FormLabel>
                 <FormInput
                   onChangeText={text => model.timeTaken.set(text)}
+                  inputStyle={styles.inputStyle}
                   placeholder={`${moment().format("H:mm")}`}
                 />
 
                 <FormLabel>Duration (in hours):</FormLabel>
                 <FormInput
                   onChangeText={text => model.dosageDuration.set(text)}
+                  inputStyle={styles.inputStyle}
                   placeholder="6"
                 />
 
                 <Button
                   raised={false}
-                  backgroundColor="#0376da"
+                  backgroundColor="#84DCCF"
                   title="Submit"
                   style={styles.submitBtn}
                   disabled={!model.state.isValid}
@@ -78,10 +84,10 @@ class NewDosageScreen extends Component {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    backgroundColor: "#E9E9Ef"
+    backgroundColor: "#312F2F"
   },
   formContainer: {
-    backgroundColor: "white",
+    backgroundColor: "#f7f7f7",
     paddingTop: 20,
     paddingBottom: 50
   },

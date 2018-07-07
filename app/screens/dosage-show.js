@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
 import { List, ListItem, Text, Button } from "react-native-elements";
 
+import { headerStyle } from "../style";
+
 class DosageShow extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.state.params.dosage.name
+      title: navigation.state.params.dosage.name,
+      ...headerStyle
     };
   };
 
@@ -24,18 +27,21 @@ class DosageShow extends Component {
 
     return (
       <View style={styles.showContainer}>
-        <Text style={styles.showText}>{dosage.dosage}</Text>
-        <Text style={styles.showText}>Exprires {dosage.timeLeft}</Text>
-        <Text style={styles.showText}>
-          Time Taken: {dosage.displayTakenTime}
-        </Text>
-        <Text style={styles.showText}>Time Up: {dosage.timeUpDisplay}</Text>
+        <View style={styles.showContent}>
+          <Text style={styles.showText}>{dosage.dosage}</Text>
+          <Text style={styles.showText}>Exprires {dosage.timeLeft}</Text>
+          <Text style={styles.showText}>
+            Time Taken: {dosage.displayTakenTime}
+          </Text>
+          <Text style={styles.showText}>Time Up: {dosage.timeUpDisplay}</Text>
 
-        <Button
-          title="Remove"
-          style={styles.removeBtn}
-          onPress={() => this.removeDosage(dosage, model)}
-        />
+          <Button
+            title="Remove"
+            backgroundColor="#84DCCF"
+            style={styles.removeBtn}
+            onPress={() => this.removeDosage(dosage, model)}
+          />
+        </View>
       </View>
     );
   }
@@ -43,7 +49,13 @@ class DosageShow extends Component {
 
 const styles = StyleSheet.create({
   showContainer: {
-    padding: 20
+    flex: 1,
+    backgroundColor: "#312F2F"
+  },
+  showContent: {
+    padding: 20,
+    paddingBottom: 35,
+    backgroundColor: "#f7f7f7"
   },
   showText: {
     fontSize: 18,

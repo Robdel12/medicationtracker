@@ -2255,9 +2255,9 @@ fsevents@^1.2.3:
     nan "^2.9.2"
     node-pre-gyp "^0.10.0"
 
-funcadelic@0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/funcadelic/-/funcadelic-0.5.1.tgz#d0d0b69df4ba194da73730a962579e3895cb17a7"
+funcadelic@0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/funcadelic/-/funcadelic-0.5.3.tgz#82cbdf591a4b20d13f9bccc1f5be758811b29bdc"
   dependencies:
     invariant "2.2.4"
 
@@ -3617,7 +3617,7 @@ microstates@^0.8.1:
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/microstates/-/microstates-0.8.1.tgz#a8b62530ad5b2fd0abc53421b5c4118d1e72338f"
   dependencies:
-    funcadelic "0.5.1"
+    funcadelic "0.5.3"
     get-prototype-descriptors "0.6.0"
     invariant "2.2.4"
     ramda "^0.25.0"

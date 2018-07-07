@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@microstates/react": "^0.8.0",
+    "funcadelic": "0.5.3",
     "microstates": "^0.8.1",
     "moment": "^2.22.2",
     "react": "16.3.1",

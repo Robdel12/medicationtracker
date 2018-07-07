@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, AsyncStorage } from "react-native";
+import { Text, AsyncStorage } from "react-native";
 
 import State from "@microstates/react";
 import AppModel from "./models/app.js";
@@ -55,12 +55,3 @@ export default class App extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F5FCFF"
-  }
-});

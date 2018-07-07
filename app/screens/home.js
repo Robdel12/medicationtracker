@@ -2,12 +2,19 @@ import React, { Component, Fragment } from "react";
 import { Button, View, StyleSheet } from "react-native";
 import { List, ListItem, Text } from "react-native-elements";
 
+import { headerStyle } from "../style";
+
 class HomeScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Med Tracker",
+      ...headerStyle,
       headerRight: (
-        <Button title="Add" onPress={() => navigation.navigate("NewDosage")} />
+        <Button
+          title="Add"
+          color="white"
+          onPress={() => navigation.navigate("NewDosage")}
+        />
       )
     };
   };
@@ -23,6 +30,10 @@ class HomeScreen extends Component {
           <ListItem
             key={index}
             title={dosage.name}
+            chevronColor="#FF715B"
+            containerStyle={styles.listContainer}
+            titleStyle={styles.listTitle}
+            subtitleStyle={styles.listSubtitle}
             onPress={() =>
               this.props.navigation.navigate("DosageShow", { dosage })
             }
@@ -41,7 +52,7 @@ class HomeScreen extends Component {
     }
 
     return (
-      <View>
+      <View style={{ backgroundColor: "#312F2F", flex: 1 }}>
         {model.state.activeDosages.length && (
           <Fragment>
             <Text style={styles.listHeading}>ACTIVE</Text>
@@ -61,18 +72,23 @@ class HomeScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F5FCFF"
-  },
   listHeading: {
     fontSize: 14,
     marginTop: 25,
     marginLeft: 8,
     marginBottom: -15,
-    color: "#80878e"
+    color: "white"
+  },
+  listContainer: {
+    backgroundColor: "white"
+  },
+  listTitle: {
+    fontWeight: "bold",
+    color: "black"
+  },
+  listSubtitle: {
+    fontWeight: "normal",
+    color: "black"
   }
 });
 
