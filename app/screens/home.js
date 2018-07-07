@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Button, View, StyleSheet } from "react-native";
+import { Button, View, StyleSheet, DeviceEventEmitter } from "react-native";
 import { List, ListItem, Text } from "react-native-elements";
 
 import { headerStyle } from "../style";
@@ -18,6 +18,19 @@ class HomeScreen extends Component {
       )
     };
   };
+
+  componentWillMount() {
+    let subscription = DeviceEventEmitter.addListener(
+      "quickActionShortcut",
+      data => {
+        let { props } = this;
+
+        if (data.title === "Add Dosage") {
+          props.navigation.navigate("NewDosage");
+        }
+      }
+    );
+  }
 
   renderDosage(dosage) {
     let hasDosage = dosage.length;
@@ -48,11 +61,16 @@ class HomeScreen extends Component {
     let { model } = this.props.screenProps;
 
     if (!model.state.dosages.length) {
-      return <Text>Add a dosage</Text>;
+      return (
+        <View style={styles.emptyStateContainer}>
+          <Text style={styles.emptyStateTitle}>No Dosages</Text>
+          <Text style={styles.emptyStateText}>Please add a dosage</Text>
+        </View>
+      );
     }
 
     return (
-      <View style={{ backgroundColor: "#312F2F", flex: 1 }}>
+      <View style={styles.container}>
         {model.state.activeDosages.length && (
           <Fragment>
             <Text style={styles.listHeading}>ACTIVE</Text>
@@ -72,6 +90,25 @@ class HomeScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#312F2F",
+    flex: 1
+  },
+  emptyStateContainer: {
+    backgroundColor: "#312F2F",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  emptyStateTitle: {
+    color: "white",
+    fontSize: 40,
+    marginBottom: 15
+  },
+  emptyStateText: {
+    color: "white",
+    fontSize: 20
+  },
   listHeading: {
     fontSize: 14,
     marginTop: 25,

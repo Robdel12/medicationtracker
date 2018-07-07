@@ -3617,7 +3617,7 @@ microstates@^0.8.1:
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/microstates/-/microstates-0.8.1.tgz#a8b62530ad5b2fd0abc53421b5c4118d1e72338f"
   dependencies:
-    funcadelic "0.5.3"
+    funcadelic "0.5.1"
     get-prototype-descriptors "0.6.0"
     invariant "2.2.4"
     ramda "^0.25.0"
@@ -4340,6 +4340,10 @@ react-native-fix-xcode-10@rhdeck/react-native-fix-xcode-10:
   resolved "https://codeload.github.com/rhdeck/react-native-fix-xcode-10/tar.gz/330b7232f9e2b97fc6a3634500e39a11ea3209fb"
   dependencies:
     glob "^7.1.2"
+
+react-native-quick-actions@^0.3.7:
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/react-native-quick-actions/-/react-native-quick-actions-0.3.7.tgz#5f4eff25e7f3785b2364f72527591ac7b777b1ef"
 
 react-native-safe-area-view@^0.7.0:
   version "0.7.0"

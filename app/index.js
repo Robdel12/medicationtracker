@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, AsyncStorage } from "react-native";
+import { Text, AsyncStorage, DeviceEventEmitter } from "react-native";
 
 import State from "@microstates/react";
 import AppModel from "./models/app.js";
