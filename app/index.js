@@ -10,6 +10,7 @@ import {
 import PushNotification from "react-native-push-notification";
 import State from "@microstates/react";
 import { create } from "microstates";
+import iCloudStorage from "react-native-icloudstore";
 
 import AppModel from "./models/app.js";
 import MedicationModel from "./models/medication";
@@ -35,10 +36,23 @@ export default class App extends Component {
 
   handleModelChange = model => {
     AsyncStorage.setItem("dosages", JSON.stringify(model.dosages));
+    iCloudStorage
+      .setItem("medtracker:dosages", JSON.stringify(model.dosages))
+      .then(result => console.log(result));
   };
 
   componentWillMount() {
     AsyncStorage.getItem("dosages").then(dosage => {
+      if (dosage) {
+        this.setState({
+          hasLoaded: true,
+          initalMedState: JSON.parse(dosage)
+        });
+      } else {
+        this.setState({ hasLoaded: true });
+      }
+    });
+    iCloudStorage.getItem("medtracker:dosages").then(dosage => {
       if (dosage) {
         this.setState({
           hasLoaded: true,
