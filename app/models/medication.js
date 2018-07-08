@@ -4,7 +4,7 @@ export default class Medication {
   name = String;
   dosage = String;
   timeTaken = Object;
-  dosageDuration = String;
+  dosageDuration = Number;
 
   initialize({ timeTaken }) {
     let initialized = this;
@@ -42,17 +42,5 @@ export default class Medication {
     // moment date
     // TODO allow config of this notification
     return this.timeUp.subtract(10, "minutes").toDate();
-  }
-
-  // TODO there should be date validation that you're not taking
-  // things in the future.
-  get isValid() {
-    let { name, timeTaken, dosageDuration } = this;
-
-    if (name.length && !!timeTaken && dosageDuration.length) {
-      return true;
-    } else {
-      return false;
-    }
   }
 }

@@ -9,13 +9,18 @@ import {
   DatePickerIOS,
   KeyboardAvoidingView
 } from "react-native";
-import { FormLabel, FormInput, Button } from "react-native-elements";
+import {
+  FormLabel,
+  FormInput,
+  Button,
+  FormValidationMessage
+} from "react-native-elements";
 import PushNotification from "react-native-push-notification";
 import State from "@microstates/react";
 import moment from "moment";
 
-import Medication from "../models/medication";
-import { headerStyle } from "../style";
+import FormModel from "./form-model";
+import { headerStyle } from "../../style";
 
 class NewDosageScreen extends Component {
   static navigationOptions = {
@@ -23,16 +28,9 @@ class NewDosageScreen extends Component {
     ...headerStyle
   };
 
-  state = {
-    showPicker: false
-  };
-
-  handlePickerTap = () => {
+  handlePickerTap = formModel => {
     Keyboard.dismiss();
-
-    this.setState(prevState => ({
-      showPicker: !prevState.showPicker
-    }));
+    formModel.showPicker.toggle();
   };
 
   submitForm = formModel => {
@@ -61,8 +59,12 @@ class NewDosageScreen extends Component {
   // TODO Refactor to use a form model microstate rather than the medication model directly
   render() {
     return (
-      <State type={Medication} value={{ timeTaken: new Date() }}>
+      <State
+        type={FormModel}
+        value={{ timeTaken: new Date(), dosageDuration: 0 }}
+      >
         {formModel => {
+          console.log("durationisanhour", formModel.state.durationIsAnHour);
           return (
             <ScrollView style={styles.background}>
               <KeyboardAvoidingView
@@ -90,6 +92,11 @@ class NewDosageScreen extends Component {
                   inputStyle={styles.inputStyle}
                   placeholder="6"
                 />
+                {!formModel.state.durationIsAnHour && (
+                  <FormValidationMessage>
+                    Duration must be a valid hour (up to 24)
+                  </FormValidationMessage>
+                )}
 
                 <FormLabel>Time Taken:</FormLabel>
                 <Button
@@ -99,15 +106,15 @@ class NewDosageScreen extends Component {
                   buttonStyle={styles.takenTimeBtn}
                   rightIcon={{
                     color: "black",
-                    name: this.state.showPicker
+                    name: formModel.state.showPicker
                       ? "arrow-drop-up"
                       : "arrow-drop-down",
                     size: 25
                   }}
-                  onPress={this.handlePickerTap}
+                  onPress={() => this.handlePickerTap(formModel)}
                 />
 
-                {this.state.showPicker && (
+                {formModel.state.showPicker && (
                   <DatePickerIOS
                     date={formModel.state.timeTaken}
                     maximumDate={new Date()}
