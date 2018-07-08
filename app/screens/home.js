@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
-import { Button, ScrollView, View, StyleSheet } from "react-native";
-import { List, ListItem, Text } from "react-native-elements";
+import { Button as RNButton, ScrollView, View, StyleSheet } from "react-native";
+import { List, ListItem, Text, Button } from "react-native-elements";
 
 import { headerStyle } from "../style";
 
@@ -12,7 +12,12 @@ class HomeScreen extends Component {
       headerBackTitle: "Home",
       headerRight: (
         <Button
-          title="Add"
+          title={null}
+          icon={{
+            name: "add",
+            size: 25
+          }}
+          backgroundColor="transparent"
           color="white"
           onPress={() => navigation.navigate("NewDosage")}
         />

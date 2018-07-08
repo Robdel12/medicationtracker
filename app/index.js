@@ -51,10 +51,8 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    let { props } = this;
-    let _this = this;
-
     AppState.addEventListener("change", this._handleAppStateChange);
+
     PushNotification.configure({
       // (required) Called when a remote or local notification is opened or received
       onNotification: function(notification) {
@@ -76,8 +74,6 @@ export default class App extends Component {
     let subscription = DeviceEventEmitter.addListener(
       "quickActionShortcut",
       data => {
-        let { props } = this;
-
         if (data.title === "Add Dosage") {
           NavigationService.navigate("NewDosage");
         }
@@ -97,10 +93,15 @@ export default class App extends Component {
 
     if (!hasLoaded) {
       return (
-        <View style={{ flex: 1, backgroundColor: "#312F2F" }}>
-          <Text style={{ color: "white", margin: 100, fontSize: 30 }}>
-            Loading...
-          </Text>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "#312F2F",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          <Text style={{ color: "white", fontSize: 30 }}>Loading...</Text>
         </View>
       );
     }
