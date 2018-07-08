@@ -1,16 +1,20 @@
 import React, { Component } from "react";
 import {
   Text,
+  View,
   AppState,
   AsyncStorage,
   DeviceEventEmitter,
   PushNotificationIOS
 } from "react-native";
 import PushNotification from "react-native-push-notification";
-
 import State from "@microstates/react";
+import { create } from "microstates";
+
 import AppModel from "./models/app.js";
+import MedicationModel from "./models/medication";
 import { RootNavigator } from "./router";
+import NavigationService from "./router/navigation-service";
 
 let INITAL_STATE = {
   dosages: []
@@ -24,13 +28,9 @@ export default class App extends Component {
   };
 
   _handleAppStateChange = nextAppState => {
+    // for now just setting the state is enough to make sure expired
+    // items render correctly
     this.setState({ appState: nextAppState });
-    if (
-      this.state.appState.match(/inactive|background/) &&
-      nextAppState === "active"
-    ) {
-      console.log("App has come to the foreground!");
-    }
   };
 
   handleModelChange = model => {
@@ -51,17 +51,38 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    AppState.addEventListener("change", this._handleAppStateChange);
+    let { props } = this;
+    let _this = this;
 
+    AppState.addEventListener("change", this._handleAppStateChange);
     PushNotification.configure({
       // (required) Called when a remote or local notification is opened or received
       onNotification: function(notification) {
-        console.log("NOTIFICATION:", notification);
+        // there's only one push notification right now.
+        // Send it to one place
+        if (notification.userInteraction) {
+          let dosage = create(MedicationModel, notification.data.newDosage);
+
+          NavigationService.navigate("DosageShow", {
+            dosage: dosage.state
+          });
+        }
 
         // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
         notification.finish(PushNotificationIOS.FetchResult.NoData);
       }
     });
+
+    let subscription = DeviceEventEmitter.addListener(
+      "quickActionShortcut",
+      data => {
+        let { props } = this;
+
+        if (data.title === "Add Dosage") {
+          NavigationService.navigate("NewDosage");
+        }
+      }
+    );
   }
 
   componentWillUnmount() {
@@ -75,7 +96,13 @@ export default class App extends Component {
       : INITAL_STATE;
 
     if (!hasLoaded) {
-      return <Text>Loading...</Text>;
+      return (
+        <View style={{ flex: 1, backgroundColor: "#312F2F" }}>
+          <Text style={{ color: "white", margin: 100, fontSize: 30 }}>
+            Loading...
+          </Text>
+        </View>
+      );
     }
 
     return (
@@ -85,7 +112,14 @@ export default class App extends Component {
         onChange={this.handleModelChange}
       >
         {model => {
-          return <RootNavigator screenProps={{ model }} />;
+          return (
+            <RootNavigator
+              screenProps={{ model }}
+              ref={navigatorRef => {
+                NavigationService.setTopLevelNavigator(navigatorRef);
+              }}
+            />
+          );
         }}
       </State>
     );

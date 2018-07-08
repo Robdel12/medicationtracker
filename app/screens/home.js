@@ -1,11 +1,5 @@
 import React, { Component, Fragment } from "react";
-import {
-  Button,
-  ScrollView,
-  View,
-  StyleSheet,
-  DeviceEventEmitter
-} from "react-native";
+import { Button, ScrollView, View, StyleSheet } from "react-native";
 import { List, ListItem, Text } from "react-native-elements";
 
 import { headerStyle } from "../style";
@@ -25,19 +19,6 @@ class HomeScreen extends Component {
       )
     };
   };
-
-  componentWillMount() {
-    let subscription = DeviceEventEmitter.addListener(
-      "quickActionShortcut",
-      data => {
-        let { props } = this;
-
-        if (data.title === "Add Dosage") {
-          props.navigation.navigate("NewDosage");
-        }
-      }
-    );
-  }
 
   renderDosage(dosage) {
     let hasDosage = dosage.length;

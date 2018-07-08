@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {
   View,
   Text,
+  Keyboard,
   StyleSheet,
   TextInput,
   ScrollView,
@@ -26,6 +27,14 @@ class NewDosageScreen extends Component {
     showPicker: false
   };
 
+  handlePickerTap = () => {
+    Keyboard.dismiss();
+
+    this.setState(prevState => ({
+      showPicker: !prevState.showPicker
+    }));
+  };
+
   submitForm = formModel => {
     let AppModel = this.props.screenProps.model;
     let currentDate = new Date();
@@ -39,9 +48,11 @@ class NewDosageScreen extends Component {
     AppModel.dosages.push(newDosage);
 
     PushNotification.localNotificationSchedule({
-      title: `${formModel.state.name} is almost up`, // (optional)
-      message: `Your dosage for ${formModel.state.name} is almost up.`, // (required)
-      date: formModel.state.notificationDate
+      message: `Your dosage ${formModel.state.name} will expire at ${
+        formModel.state.timeUpDisplay
+      }`,
+      date: formModel.state.notificationDate,
+      userInfo: { newDosage }
     });
 
     this.props.navigation.navigate("Home");
@@ -93,11 +104,7 @@ class NewDosageScreen extends Component {
                       : "arrow-drop-down",
                     size: 25
                   }}
-                  onPress={() =>
-                    this.setState(prevState => ({
-                      showPicker: !prevState.showPicker
-                    }))
-                  }
+                  onPress={this.handlePickerTap}
                 />
 
                 {this.state.showPicker && (
