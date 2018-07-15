@@ -56,7 +56,6 @@ class NewDosageScreen extends Component {
     this.props.navigation.navigate("Home");
   };
 
-  // TODO Refactor to use a form model microstate rather than the medication model directly
   render() {
     return (
       <State
