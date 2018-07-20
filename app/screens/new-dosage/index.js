@@ -47,7 +47,7 @@ class NewDosageScreen extends Component {
 
     PushNotification.localNotificationSchedule({
       message: `Your dosage ${formModel.state.name} will expire at ${
-        formModel.state.timeUpDisplay
+        formModel.state.formattedTakenTime
       }`,
       date: formModel.state.notificationDate,
       userInfo: { newDosage }
@@ -100,7 +100,7 @@ class NewDosageScreen extends Component {
                 <FormLabel>Time Taken:</FormLabel>
                 <Button
                   backgroundColor="transparent"
-                  title={formModel.state.displayTakenTime}
+                  title={formModel.state.formattedTakenTime}
                   textStyle={{ color: "black" }}
                   buttonStyle={styles.takenTimeBtn}
                   rightIcon={{

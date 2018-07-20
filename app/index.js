@@ -36,23 +36,11 @@ export default class App extends Component {
 
   handleModelChange = model => {
     AsyncStorage.setItem("dosages", JSON.stringify(model.dosages));
-    iCloudStorage
-      .setItem("medtracker:dosages", JSON.stringify(model.dosages))
-      .then(result => console.log(result));
+    iCloudStorage.setItem("medtracker:dosages", JSON.stringify(model.dosages));
   };
 
   componentWillMount() {
     AsyncStorage.getItem("dosages").then(dosage => {
-      if (dosage) {
-        this.setState({
-          hasLoaded: true,
-          initalMedState: JSON.parse(dosage)
-        });
-      } else {
-        this.setState({ hasLoaded: true });
-      }
-    });
-    iCloudStorage.getItem("medtracker:dosages").then(dosage => {
       if (dosage) {
         this.setState({
           hasLoaded: true,

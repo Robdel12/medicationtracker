@@ -17,16 +17,8 @@ export default class Medication {
   }
 
   // Computeds
-  get displayTakenTime() {
-    return moment(this.timeTaken).format("h:mma (MM/DD)");
-  }
-
   get timeUp() {
     return moment(this.timeTaken).add(this.dosageDuration, "hours");
-  }
-
-  get timeUpDisplay() {
-    return this.timeUp.format("h:mma (MM/DD)");
   }
 
   get timeLeft() {
@@ -42,5 +34,18 @@ export default class Medication {
     // moment date
     // TODO allow config of this notification
     return this.timeUp.subtract(10, "minutes").toDate();
+  }
+
+  // display formatting
+  get formattedTakenTime() {
+    return moment(this.timeTaken).format("h:mma");
+  }
+
+  get formattedExpireTime() {
+    return this.timeUp.format("h:mma");
+  }
+
+  get formattedTakenFullDate() {
+    return moment(this.timeTaken).format("MM/DD/YYYY");
   }
 }

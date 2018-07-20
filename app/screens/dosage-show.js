@@ -28,25 +28,28 @@ class DosageShow extends Component {
     return (
       <View style={styles.showContainer}>
         <View style={styles.showContent}>
-          <Text style={styles.showText}>{dosage.dosage}</Text>
-          <Text style={styles.showText}>Duration: {dosage.dosageDuration}</Text>
           <Text style={styles.showText}>
             {dosage.hasExpired
               ? `Expired ${dosage.timeLeft}`
               : `Expires ${dosage.timeLeft}`}
           </Text>
+          <Text style={styles.showText}>{dosage.dosage}</Text>
           <Text style={styles.showText}>
-            Time Taken: {dosage.displayTakenTime}
+            Duration: {dosage.dosageDuration} hours
           </Text>
-          <Text style={styles.showText}>Time Up: {dosage.timeUpDisplay}</Text>
-
-          <Button
-            title="Remove"
-            backgroundColor="#84DCCF"
-            style={styles.removeBtn}
-            onPress={() => this.removeDosage(dosage, model)}
-          />
+          <Text style={styles.showText}>
+            {`Taken at ${dosage.formattedTakenTime} and expires at ${
+              dosage.formattedExpireTime
+            }`}
+          </Text>
+          <Text style={styles.showText}>{dosage.formattedTakenFullDate}</Text>
         </View>
+        <Button
+          title="Remove"
+          backgroundColor="#84DCCF"
+          style={styles.removeBtn}
+          onPress={() => this.removeDosage(dosage, model)}
+        />
       </View>
     );
   }
@@ -59,7 +62,7 @@ const styles = StyleSheet.create({
   },
   showContent: {
     padding: 20,
-    paddingBottom: 35,
+    paddingBottom: 20,
     backgroundColor: "#f7f7f7"
   },
   showText: {
@@ -67,7 +70,7 @@ const styles = StyleSheet.create({
     marginBottom: 8
   },
   removeBtn: {
-    marginTop: 20
+    marginTop: -10
   }
 });
 

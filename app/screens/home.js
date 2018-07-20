@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
-import { Button as RNButton, ScrollView, View, StyleSheet } from "react-native";
-import { List, ListItem, Text, Button } from "react-native-elements";
+import { TouchableOpacity, ScrollView, View, StyleSheet } from "react-native";
+import { List, ListItem, Text, Button, Icon } from "react-native-elements";
 
 import { headerStyle } from "../style";
 
@@ -11,16 +11,15 @@ class HomeScreen extends Component {
       ...headerStyle,
       headerBackTitle: "Home",
       headerRight: (
-        <Button
-          title={null}
-          icon={{
-            name: "add",
-            size: 25
-          }}
-          backgroundColor="transparent"
-          color="white"
+        <TouchableOpacity
           onPress={() => navigation.navigate("NewDosage")}
-        />
+          accessibilityLabel="Add new Dosage"
+          accessibilityTraits="button"
+          accessible={true}
+          style={styles.headerButton}
+        >
+          <Icon name="add" color="white" />
+        </TouchableOpacity>
       )
     };
   };
@@ -32,6 +31,11 @@ class HomeScreen extends Component {
       return null;
     } else {
       return dosage.map((dosage, index) => {
+        let subtitle = `${dosage.dosage} ${"\u2022"} ${
+          dosage.formattedTakenTime
+        } / ${dosage.formattedExpireTime} ${"\u2022"} ${
+          dosage.formattedTakenFullDate
+        }`;
         return (
           <ListItem
             key={index}
@@ -43,7 +47,7 @@ class HomeScreen extends Component {
             onPress={() =>
               this.props.navigation.navigate("DosageShow", { dosage })
             }
-            subtitle={`${dosage.dosage} ${"\u2022"} ${dosage.displayTakenTime}`}
+            subtitle={subtitle}
           />
         );
       });
@@ -86,6 +90,10 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#312F2F",
     flex: 1
+  },
+  headerButton: {
+    marginRight: 10,
+    padding: 10
   },
   emptyStateContainer: {
     backgroundColor: "#312F2F",
