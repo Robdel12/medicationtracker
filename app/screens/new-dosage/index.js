@@ -63,7 +63,6 @@ class NewDosageScreen extends Component {
         value={{ timeTaken: new Date(), dosageDuration: 0 }}
       >
         {formModel => {
-          console.log("durationisanhour", formModel.state.durationIsAnHour);
           return (
             <ScrollView style={styles.background}>
               <KeyboardAvoidingView
@@ -91,7 +90,7 @@ class NewDosageScreen extends Component {
                   inputStyle={styles.inputStyle}
                   placeholder="6"
                 />
-                {!formModel.state.durationIsAnHour && (
+                {!formModel.durationIsAnHour && (
                   <FormValidationMessage>
                     Duration must be a valid hour (up to 24)
                   </FormValidationMessage>
@@ -100,7 +99,7 @@ class NewDosageScreen extends Component {
                 <FormLabel>Time Taken:</FormLabel>
                 <Button
                   backgroundColor="transparent"
-                  title={formModel.state.formattedTakenTime}
+                  title={formModel.formattedTakenTime}
                   textStyle={{ color: "black" }}
                   buttonStyle={styles.takenTimeBtn}
                   rightIcon={{
@@ -127,7 +126,7 @@ class NewDosageScreen extends Component {
                   backgroundColor="#84DCCF"
                   title="Submit"
                   style={styles.submitBtn}
-                  disabled={!formModel.state.isValid}
+                  disabled={!formModel.isValid}
                   onPress={() => this.submitForm(formModel)}
                 />
               </KeyboardAvoidingView>

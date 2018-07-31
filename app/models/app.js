@@ -14,10 +14,14 @@ export default class AppModel {
   dosages = [Medication];
 
   get activeDosages() {
-    return this.dosages.filter(dosage => !dosage.hasExpired).sort(sortByDesc);
+    return this.dosages.state
+      .filter(dosage => !dosage.hasExpired)
+      .sort(sortByDesc);
   }
 
   get expiredDosages() {
-    return this.dosages.filter(dosage => dosage.hasExpired).sort(sortByDesc);
+    return this.dosages.state
+      .filter(dosage => dosage.hasExpired)
+      .sort(sortByDesc);
   }
 }

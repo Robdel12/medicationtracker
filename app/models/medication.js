@@ -6,11 +6,11 @@ export default class Medication {
   timeTaken = Object;
   dosageDuration = Number;
 
-  initialize({ timeTaken }) {
+  initialize(med) {
     let initialized = this;
 
-    if (typeof timeTaken === "string") {
-      initialized = initialized.timeTaken.set(new Date(timeTaken));
+    if (!!med && typeof med.timeTaken === "string") {
+      initialized = initialized.timeTaken.set(new Date(med.timeTaken));
     }
 
     return initialized;
@@ -18,7 +18,7 @@ export default class Medication {
 
   // Computeds
   get timeUp() {
-    return moment(this.timeTaken).add(this.dosageDuration, "hours");
+    return moment(this.timeTaken.state).add(this.dosageDuration.state, "hours");
   }
 
   get timeLeft() {
@@ -38,7 +38,7 @@ export default class Medication {
 
   // display formatting
   get formattedTakenTime() {
-    return moment(this.timeTaken).format("h:mma");
+    return moment(this.timeTaken.state).format("h:mma");
   }
 
   get formattedExpireTime() {
@@ -46,6 +46,6 @@ export default class Medication {
   }
 
   get formattedTakenFullDate() {
-    return moment(this.timeTaken).format("MM/DD/YYYY");
+    return moment(this.timeTaken.state).format("MM/DD/YYYY");
   }
 }

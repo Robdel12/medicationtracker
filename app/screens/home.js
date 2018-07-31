@@ -68,17 +68,17 @@ class HomeScreen extends Component {
 
     return (
       <ScrollView style={styles.container}>
-        {model.state.activeDosages.length && (
+        {model.activeDosages.length && (
           <Fragment>
             <Text style={styles.listHeading}>ACTIVE</Text>
-            <List>{this.renderDosage(model.state.activeDosages)}</List>
+            <List>{this.renderDosage(model.activeDosages)}</List>
           </Fragment>
         )}
 
-        {model.state.expiredDosages.length && (
+        {model.expiredDosages.length && (
           <Fragment>
             <Text style={styles.listHeading}>EXPIRED</Text>
-            <List>{this.renderDosage(model.state.expiredDosages)}</List>
+            <List>{this.renderDosage(model.expiredDosages)}</List>
           </Fragment>
         )}
       </ScrollView>
