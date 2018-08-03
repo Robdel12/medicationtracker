@@ -47,9 +47,9 @@ class NewDosageScreen extends Component {
 
     PushNotification.localNotificationSchedule({
       message: `Your dosage ${formModel.state.name} will expire at ${
-        formModel.state.formattedExpireTime
+        formModel.formattedExpireTime
       }`,
-      date: formModel.state.notificationDate,
+      date: formModel.notificationDate,
       userInfo: { newDosage }
     });
 

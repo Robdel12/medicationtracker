@@ -3613,9 +3613,9 @@ micromatch@^3.1.10, micromatch@^3.1.4, micromatch@^3.1.8:
     snapdragon "^0.8.1"
     to-regex "^3.0.2"
 
-microstates@^0.9.1:
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/microstates/-/microstates-0.9.1.tgz#bddbf8664d0edc89cf89ae508038c356cada33a4"
+microstates@^0.9.5:
+  version "0.9.5"
+  resolved "https://registry.yarnpkg.com/microstates/-/microstates-0.9.5.tgz#bad2d2adce1181219c1ba80e82bcb10bcbf175c8"
   dependencies:
     funcadelic "^0.5.0"
     symbol-observable "^1.2.0"

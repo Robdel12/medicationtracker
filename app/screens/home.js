@@ -31,7 +31,7 @@ class HomeScreen extends Component {
       return null;
     } else {
       return dosage.map((dosage, index) => {
-        let subtitle = `${dosage.dosage} ${"\u2022"} ${
+        let subtitle = `${dosage.state.dosage} ${"\u2022"} ${
           dosage.formattedTakenTime
         } / ${dosage.formattedExpireTime} ${"\u2022"} ${
           dosage.formattedTakenFullDate
@@ -39,7 +39,7 @@ class HomeScreen extends Component {
         return (
           <ListItem
             key={index}
-            title={dosage.name}
+            title={dosage.state.name}
             chevronColor="#FF715B"
             containerStyle={styles.listContainer}
             titleStyle={styles.listTitle}

@@ -1,23 +1,24 @@
 import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
 import { List, ListItem, Text, Button } from "react-native-elements";
+import { filter } from "microstates";
 
 import { headerStyle } from "../style";
 
 class DosageShow extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.state.params.dosage.name,
+      title: navigation.state.params.dosage.state.name,
       ...headerStyle
     };
   };
 
   removeDosage(currentDosage, model) {
-    let filteredModel = model.dosages.filter(
-      dosage => currentDosage !== dosage
-    );
+    let filteredModel = filter(model.dosages.state, dosage => {
+      return currentDosage.state !== dosage;
+    });
 
-    model.dosages.set(filteredModel.state.dosages);
+    model.dosages.set(filteredModel);
     this.props.navigation.navigate("Home");
   }
 
@@ -33,9 +34,9 @@ class DosageShow extends Component {
               ? `Expired ${dosage.timeLeft}`
               : `Expires ${dosage.timeLeft}`}
           </Text>
-          <Text style={styles.showText}>{dosage.dosage}</Text>
+          <Text style={styles.showText}>{dosage.state.dosage}</Text>
           <Text style={styles.showText}>
-            Duration: {dosage.dosageDuration} hours
+            Duration: {dosage.state.dosageDuration} hours
           </Text>
           <Text style={styles.showText}>
             {`Taken at ${dosage.formattedTakenTime} and expires at ${
