@@ -4,18 +4,18 @@ class FormModel extends Medication {
   showPicker = Boolean;
 
   get durationIsAnHour() {
-    let duration = parseInt(this.dosageDuration, 10);
+    let duration = parseInt(this.dosageDuration.state, 10);
 
     return duration <= 24;
   }
 
   get isValid() {
-    let { name, timeTaken, dosage, dosageDuration } = this;
+    let { name, timeTaken, dosage, dosageDuration } = this.state;
 
     if (
       name.length &&
       !!timeTaken &&
-      dosageDuration.length &&
+      dosageDuration &&
       dosage.length &&
       this.durationIsAnHour
     ) {
