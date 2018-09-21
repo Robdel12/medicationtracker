@@ -34,9 +34,9 @@ class DosageShow extends Component {
               ? `Expired ${dosage.timeLeft}`
               : `Expires ${dosage.timeLeft}`}
           </Text>
-          <Text style={styles.showText}>{dosage.state.dosage}</Text>
+          <Text style={styles.showText}>{dosage.dosage.state}</Text>
           <Text style={styles.showText}>
-            Duration: {dosage.state.dosageDuration} hours
+            Duration: {dosage.dosageDuration.state} hours
           </Text>
           <Text style={styles.showText}>
             {`Taken at ${dosage.formattedTakenTime} and expires at ${

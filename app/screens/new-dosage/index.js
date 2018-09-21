@@ -37,16 +37,16 @@ class NewDosageScreen extends Component {
     let AppModel = this.props.screenProps.model;
     let currentDate = new Date();
     let newDosage = {
-      name: formModel.state.name,
-      dosage: formModel.state.dosage,
-      timeTaken: formModel.state.timeTaken,
-      dosageDuration: formModel.state.dosageDuration
+      name: formModel.name.state,
+      dosage: formModel.dosage.state,
+      timeTaken: formModel.timeTaken.state,
+      dosageDuration: formModel.dosageDuration.state
     };
 
     AppModel.dosages.push(newDosage);
 
     PushNotification.localNotificationSchedule({
-      message: `Your dosage ${formModel.state.name} will expire at ${
+      message: `Your dosage ${formModel.name.state} will expire at ${
         formModel.formattedExpireTime
       }`,
       date: formModel.notificationDate,
@@ -104,7 +104,7 @@ class NewDosageScreen extends Component {
                   buttonStyle={styles.takenTimeBtn}
                   rightIcon={{
                     color: "black",
-                    name: formModel.state.showPicker
+                    name: formModel.showPicker.state
                       ? "arrow-drop-up"
                       : "arrow-drop-down",
                     size: 25
@@ -112,9 +112,9 @@ class NewDosageScreen extends Component {
                   onPress={() => this.handlePickerTap(formModel)}
                 />
 
-                {formModel.state.showPicker && (
+                {formModel.showPicker.state && (
                   <DatePickerIOS
-                    date={formModel.state.timeTaken}
+                    date={formModel.timeTaken.state}
                     maximumDate={new Date()}
                     mode="time"
                     onDateChange={date => formModel.timeTaken.set(date)}
