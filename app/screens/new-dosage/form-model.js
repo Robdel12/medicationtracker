@@ -10,13 +10,13 @@ class FormModel extends Medication {
   }
 
   get isValid() {
-    let { name, timeTaken, dosage, dosageDuration } = this.state;
+    let { name, timeTaken, dosage, dosageDuration } = this;
 
     if (
-      name.length &&
-      !!timeTaken &&
-      dosageDuration &&
-      dosage.length &&
+      name.state.length &&
+      !!timeTaken.state &&
+      dosageDuration.state &&
+      dosage.state.length &&
       this.durationIsAnHour
     ) {
       return true;

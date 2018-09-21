@@ -31,7 +31,7 @@ class HomeScreen extends Component {
       return null;
     } else {
       return dosage.map((dosage, index) => {
-        let subtitle = `${dosage.state.dosage} ${"\u2022"} ${
+        let subtitle = `${dosage.dosage.state} ${"\u2022"} ${
           dosage.formattedTakenTime
         } / ${dosage.formattedExpireTime} ${"\u2022"} ${
           dosage.formattedTakenFullDate
@@ -39,7 +39,7 @@ class HomeScreen extends Component {
         return (
           <ListItem
             key={index}
-            title={dosage.state.name}
+            title={dosage.name.state}
             chevronColor="#FF715B"
             containerStyle={styles.listContainer}
             titleStyle={styles.listTitle}
@@ -57,7 +57,7 @@ class HomeScreen extends Component {
   render() {
     let { model } = this.props.screenProps;
 
-    if (!model.state.dosages.length) {
+    if (!model.dosages.state.length) {
       return (
         <View style={styles.emptyStateContainer}>
           <Text style={styles.emptyStateTitle}>No Dosages</Text>
